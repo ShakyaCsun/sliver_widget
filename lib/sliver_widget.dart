@@ -18,14 +18,14 @@ class SliverWidget extends StatefulWidget {
   final bool isAnimated;
   final Duration animationDuration;
 
-  const SliverWidget(
-      {Key key,
-      @required this.child,
-      this.isFadeByPositionRatio = true,
-      this.visibility = SliverWidgetVisibility.visibleWhenCollapsed,
-      this.isAnimated = true,
-      this.animationDuration = const Duration(milliseconds: 250)})
-      : super(key: key);
+  const SliverWidget({
+    Key? key,
+    required this.child,
+    this.isFadeByPositionRatio = true,
+    this.visibility = SliverWidgetVisibility.visibleWhenCollapsed,
+    this.isAnimated = true,
+    this.animationDuration = const Duration(milliseconds: 250),
+  }) : super(key: key);
   @override
   _SliverWidgetState createState() {
     return _SliverWidgetState();
@@ -33,7 +33,7 @@ class SliverWidget extends StatefulWidget {
 }
 
 class _SliverWidgetState extends State<SliverWidget> {
-  ScrollPosition _position;
+  ScrollPosition? _position;
   double _ratio = 1;
 
   @override
@@ -60,7 +60,7 @@ class _SliverWidgetState extends State<SliverWidget> {
   }
 
   void _positionListener() {
-    final FlexibleSpaceBarSettings settings =
+    final FlexibleSpaceBarSettings? settings =
         context.dependOnInheritedWidgetOfExactType();
 
     if (settings != null && settings.maxExtent > settings.minExtent) {
@@ -100,9 +100,10 @@ class _SliverWidgetState extends State<SliverWidget> {
       }
       if (widget.isAnimated) {
         return AnimatedOpacity(
-            opacity: opacity,
-            child: widget.child,
-            duration: widget.animationDuration);
+          opacity: opacity,
+          duration: widget.animationDuration,
+          child: widget.child,
+        );
       } else {
         return Opacity(opacity: opacity, child: widget.child);
       }
